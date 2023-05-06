@@ -5,7 +5,7 @@
 <suite name="Positive Login - Data Provider" verbose="1">
     <test name="Positive Login">
         <classes>
-            <class name="techproed.tests.smokeTest.PositiveTest"/>
+            <class name="techproed.utilities.ReusableMethods.PositiveTest"/>
         </classes>
     </test>
 

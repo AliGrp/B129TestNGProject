@@ -12,6 +12,6 @@ public class ListenersRetryAnalyzer implements IAnnotationTransformer {
     //Bu class ile ListenersRetry classını XML dosyası ile ilişkilendirebileceğiz.
 
     public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod){
-        annotation.setRetryAnalyzer(ListenersRetry.class);
+        annotation.setRetryAnalyzer(Listeners.class);
     }
 }

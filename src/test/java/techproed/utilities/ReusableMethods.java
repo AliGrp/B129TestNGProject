@@ -3,15 +3,16 @@ package techproed.utilities;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
+import org.testng.annotations.Test;
+import techproed.pages.BlueRentalPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -203,5 +204,33 @@ public  class ReusableMethods {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         String attribute_Value = (String) js.executeScript("return document.getElementById('" + id + "')." + attributeName);
         System.out.println("Attribute Value: = " + attribute_Value);
+    }
+
+    public static class PositiveTest {
+        @Test
+        public void test01() {
+            /*
+            Acceptance Criteria:
+            Admin olarak, uygulamaya giriş yapabilmeliyim
+            https://www.bluerentalcars.com/
+            Admin email: jack@gmail.com
+            Admin password: 12345
+             */
+            Driver.getDriver().get(ConfigReader.getProperty("blueRentACarUrl"));
+            Reporter.log("BlueRental sayfasina gidildi");
+            BlueRentalPage blueRentalPage = new BlueRentalPage();
+
+            blueRentalPage.login.click();
+            Reporter.log("Login butonuna tiklandi");
+            blueRentalPage.email.sendKeys(ConfigReader.getProperty("email"),
+            Keys.TAB,ConfigReader.getProperty("pass"),Keys.ENTER);
+            Reporter.log("Email ve Password girildi");
+
+            Assert.assertEquals(blueRentalPage.verify.getText(),"Jack Nicholson");
+            Reporter.log("Dogrulama yapildi");
+            Driver.closeDriver();
+            Reporter.log("Sayfa kapatildi");
+
+        }
     }
 }

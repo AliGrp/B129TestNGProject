@@ -22,9 +22,9 @@ public class C03_Positive extends ReusableMethods {
         return  excelUtils.getDataArrayWithoutFirstRow();
     }
 
-    @Test(dataProvider = "kullaniciBilgileri")
-    public void test01(String email, String password){
 
+    @Test(dataProvider = "kullaniciBilgileri",retryAnalyzer = techproed.utilities.ListenersRetry.class)
+    public void test01(String email, String password){
         Driver.getDriver().get(ConfigReader.getProperty("blueRentACarUrl"));
         BlueRentalPage blueRentalPage = new BlueRentalPage();
         WebElement ddm = blueRentalPage.aracSecimi;
@@ -39,6 +39,7 @@ public class C03_Positive extends ReusableMethods {
         blueRentalPage.email.sendKeys(email,Keys.TAB,password,Keys.ENTER);
         Assert.assertTrue(blueRentalPage.verify.isDisplayed());
         Driver.closeDriver();
+
 
     }
 }
