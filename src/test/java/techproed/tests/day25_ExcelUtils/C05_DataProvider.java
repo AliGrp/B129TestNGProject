@@ -7,7 +7,7 @@ import techproed.pages.BlueRentalPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
 import techproed.utilities.ExcelUtils;
-import techproed.utilities.ReusableMethods;
+
 
 public class C05_DataProvider {
     /*
@@ -28,7 +28,7 @@ public class C05_DataProvider {
         BlueRentalPage blueRentalPage = new BlueRentalPage();
         blueRentalPage.login.click();//login buttonuna tıklar
         blueRentalPage.email.sendKeys(email, Keys.TAB,password,Keys.ENTER);
-        ReusableMethods.bekle(3);
+
         Driver.closeDriver();
     }
 }

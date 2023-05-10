@@ -5,13 +5,12 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.apache.commons.io.FileUtils;
 
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.Reporter;
-import org.testng.annotations.Test;
+
 import techproed.pages.BlueRentalPage;
 
 import java.io.File;
@@ -148,7 +147,7 @@ public  class ReusableMethods {
 
         //Raporda gözükmesini istediğimiz bilgiler için
         extentReports.setSystemInfo("Browser", "Chrome");
-        extentReports.setSystemInfo("Tester", "Erol");
+        extentReports.setSystemInfo("Tester", "Ali");
         extentHtmlReporter.config().setDocumentTitle("Extent Report");
         extentHtmlReporter.config().setReportName("Smoke Test Raporu");
     }
@@ -206,31 +205,45 @@ public  class ReusableMethods {
         System.out.println("Attribute Value: = " + attribute_Value);
     }
 
-    public static class PositiveTest {
-        @Test
-        public void test01() {
-            /*
-            Acceptance Criteria:
-            Admin olarak, uygulamaya giriş yapabilmeliyim
-            https://www.bluerentalcars.com/
-            Admin email: jack@gmail.com
-            Admin password: 12345
-             */
-            Driver.getDriver().get(ConfigReader.getProperty("blueRentACarUrl"));
-            Reporter.log("BlueRental sayfasina gidildi");
-            BlueRentalPage blueRentalPage = new BlueRentalPage();
-
-            blueRentalPage.login.click();
-            Reporter.log("Login butonuna tiklandi");
-            blueRentalPage.email.sendKeys(ConfigReader.getProperty("email"),
-            Keys.TAB,ConfigReader.getProperty("pass"),Keys.ENTER);
-            Reporter.log("Email ve Password girildi");
-
-            Assert.assertEquals(blueRentalPage.verify.getText(),"Jack Nicholson");
-            Reporter.log("Dogrulama yapildi");
-            Driver.closeDriver();
-            Reporter.log("Sayfa kapatildi");
-
-        }
+    public static String getScreenshot(String name) throws IOException {
+        // naming the screenshot with the current date to avoid duplication
+        String date = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+        // TakesScreenshot is an interface of selenium that takes the screenshot
+        TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        // full path to the screenshot location
+        String target = System.getProperty("user.dir") + "/target/Screenshots/" + name + date + ".png";
+        File finalDestination = new File(target);
+        // save the screenshot to the path given
+        FileUtils.copyFile(source, finalDestination);
+        return target;
     }
+
+//    public static class PositiveTest {
+//        @Test
+//        public void test01() {
+//            /*
+//            Acceptance Criteria:
+//            Admin olarak, uygulamaya giriş yapabilmeliyim
+//            https://www.bluerentalcars.com/
+//            Admin email: jack@gmail.com
+//            Admin password: 12345
+//             */
+//            Driver.getDriver().get(ConfigReader.getProperty("blueRentACarUrl"));
+//            Reporter.log("BlueRental sayfasina gidildi");
+//            BlueRentalPage blueRentalPage = new BlueRentalPage();
+//
+//            blueRentalPage.login.click();
+//            Reporter.log("Login butonuna tiklandi");
+//            blueRentalPage.email.sendKeys(ConfigReader.getProperty("email"),
+//            Keys.TAB,ConfigReader.getProperty("pass"),Keys.ENTER);
+//            Reporter.log("Email ve Password girildi");
+//
+//            Assert.assertEquals(blueRentalPage.verify.getText(),"Jack Nicholson");
+//            Reporter.log("Dogrulama yapildi");
+//            Driver.closeDriver();
+//            Reporter.log("Sayfa kapatildi");
+//
+//        }
+//    }
 }
